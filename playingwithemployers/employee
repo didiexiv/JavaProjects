@@ -1,0 +1,212 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package playingwithemployers;
+
+/**
+ *
+ * @author akasemaj
+ */
+public class Arraylis {
+
+    public Arraylis() {
+    }
+    
+}
+
+
+package playingwithemployers;
+
+public class Director extends Employee implements Driving, Advisable{
+    
+    public Director(String name, double salary) {
+        super(name, salary);
+    }
+      public void guide(){
+        System.out.println(getName() + " DIrector is guidding");
+        
+    }
+
+    @Override
+    public void drive() {
+       System.out.println(getName() + " Director is driving"); 
+    }
+
+    @Override
+    public void giveAdvise() {
+        System.out.println(getName() + " Director is advising");
+    }
+
+    @Override
+    public void work() {
+        guide();
+    }
+}
+
+
+package playingwithemployers;
+
+public interface Driving {
+    void drive();
+    
+    
+}
+
+
+package playingwithemployers;
+
+
+public abstract class Employee {
+    private String name;
+    private double salary;
+    
+    
+    public Employee(String name, double salary) {
+        this.name = name;
+        this.salary = salary;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    
+    public abstract void work();
+    
+    @Override
+    public String toString() {
+        return "Employee{" + "name=" + name + ", salary=" + salary + '}';
+    }
+    
+    
+    
+}
+
+package playingwithemployers;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PlayingWithEmployers {
+
+    public static void main(String[] args) {
+        Employee teacher1 = new Teacher("Nick", 1000);
+        Employee teacher2 = new Teacher("Mary", 1000);
+        Employee receptionist = new Receptionist("Peter", 1200);
+        Employee director1 = new Director("Andy", 2000);
+        Employee director2 = new Director("Jonathan", 2500);
+
+        List<Employee> employees = new ArrayList();
+        employees.add(teacher1);
+        employees.add(teacher2);
+        employees.add(receptionist);
+        employees.add(director1);
+        employees.add(director2);
+        
+        List<Employee> advisers = new ArrayList();
+        List<Employee> drivers = new ArrayList();
+        
+        advisers.add(teacher1);
+        
+        for (Employee employee : employees) {
+            employee.work();
+            boolean isAdvisable = employee instanceof Advisable;
+            boolean isDriving = employee instanceof Driving;
+            
+            if (isAdvisable == true ) {
+                advisers.add(employee);
+                System.out.println("Employee " + employee.getName() + " can give advices");
+            }
+            if (isDriving == true){
+                drivers.add(employee);
+            System.out.println("Employee " + employee.getName() + " can drive");
+            }
+        }
+        
+       
+        
+        
+        
+        // how many advisers and drivers do we have?
+        
+
+        
+    }
+
+}
+
+
+package playingwithemployers;
+
+public class Receptionist extends Employee implements Driving {
+    
+    public Receptionist(String name, double salary) {
+        super(name, salary);
+    }
+      public void greed(){
+        System.out.println(getName() + " Receiption is greet");
+        
+    }
+
+    @Override
+    public void drive() {
+        System.out.println(getName() + " Receptionist is driving");
+    }
+
+    @Override
+    public void work() {
+        greed();
+    }
+}
+
+
+package playingwithemployers;
+
+
+public class Teacher extends Employee implements Advisable{
+    
+    public Teacher(String name, double salary) {
+        super(name, salary);
+    }
+    
+    public void teach(){
+        System.out.println(getName() + " Teacher is teaching");
+        
+    }
+
+    @Override
+    public void giveAdvise() {
+         System.out.println(getName() + " Teacher is giving advise");
+    }
+
+    @Override
+    public void work() {
+        teach();
+    }
+    
+    
+}
+
+package playingwithemployers;
+
+public interface Advisable {
+// absytract word is emplicitly activated 
+// public word is also emplicitly activated
+
+    void giveAdvise();
+
+}
